@@ -6,9 +6,7 @@
 
 const express = require("express");
 
-const port = 80;
-
-// initializes port 80 = default port
+const port = process.env.PORT || 5001;
 
 const app = express();
 
