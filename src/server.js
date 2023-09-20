@@ -32,7 +32,20 @@ const syncTables = () => {
     Book.sync();
 };
 
-// "app" = loaded express into APP, to access the ".GET" method (or "GET Request"), the ".GET" method corresponds to a HTTP Verb
+app.post("/addbook", async (req, res) => {
+    console.log(req.body);
+    const book = await Book.create({
+        title: req.body.title,
+        author: req.body.author,
+        genre: req.body.genre,
+    });
+
+    const successResponse = {
+        book: book,
+        message: "book created",
+    };
+
+// "app" = loaded express into APP, to access the ".GET" method (or "GET Request"), the ".GET1" method corresponds to a HTTP Verb
 
 // "/health" = connects to the health URL to which the request will be going to i.e: http://localhost/health
 
@@ -45,5 +58,6 @@ app.get("/health", (req, res) => {
 });
 
 app.listen(port, () => {
+    syncTables();
     console.log(`App is listening on port ${port}`);
 });
