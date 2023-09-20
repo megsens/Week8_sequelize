@@ -28,6 +28,10 @@ const Book = connection.define("Book", {
     }
 });
 
+const syncTables = () => {
+    Book.sync();
+};
+
 // "app" = loaded express into APP, to access the ".GET" method (or "GET Request"), the ".GET" method corresponds to a HTTP Verb
 
 // "/health" = connects to the health URL to which the request will be going to i.e: http://localhost/health
