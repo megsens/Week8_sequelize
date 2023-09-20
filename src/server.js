@@ -1,3 +1,4 @@
+require("dotenv").config();
 // imports express
 // imports port
 // assigns express to "app"
@@ -11,6 +12,21 @@ const port = process.env.PORT || 5001;
 const app = express();
 
 app.use(express.json());
+
+const { DataTypes } = require("sequelize");
+const connection = require(".db/connection");
+
+const Book = connection.define("Book", {
+    title: {
+        type: DataTypes.STRING,
+    },
+    author: {
+        type: DataTypes.STRING
+    },
+    genre: {
+        type: DataTypes.STRING
+    }
+});
 
 // "app" = loaded express into APP, to access the ".GET" method (or "GET Request"), the ".GET" method corresponds to a HTTP Verb
 
