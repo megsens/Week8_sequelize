@@ -1,15 +1,19 @@
 const { Router } = require("express");
-const router = Router();
+const bookRouter = Router();
 
 const Book = require("./model");
+const Genre = require("../genres/model");
+
+const { getAllBooks } = require("./controllers");
 
 
 bookRouter.post("/addbook", async (req, res) => {
-    console.log(req.body);
+    const genre = await Genre.findOne({ where: { genre: req.body.genre }});
+    console.log("genre: ", genre);
     const book = await Book.create({
         title: req.body.title,
         author: req.body.author,
-        genre: req.body.genre,
+        GenreId: genre.id,
     });
 
     const successResponse = {
@@ -19,7 +23,7 @@ bookRouter.post("/addbook", async (req, res) => {
 
 res.status(201).json(successResponse)
 
-})
+});
 
 bookRouter.get("/getAllBooks", async (req, res) => {
     console.log(req.body);
@@ -55,7 +59,7 @@ res.status(201).json(successResponse)
 
 })
 
-bookRouter.destroy("/deleteBook", async (req, res) => {
+bookRouter.delete("/deleteBook", async (req, res) => {
     console.log(req.body);
     const book = await Book.destroy({
         title: req.body.title,
@@ -72,3 +76,4 @@ res.status(201).json(successResponse)
 
 });
 
+module.exports = bookRouter

@@ -10,6 +10,9 @@ const express = require("express");
 const Book = require("./books/model");
 const Genre = require("./genres/model");
 
+const bookRouter = require("./books/routes");
+const genreRouter = require("./genres/routes");
+
 const port = process.env.PORT || 5001;
 
 const app = express();
@@ -17,8 +20,16 @@ const app = express();
 app.use(express.json());
 
 const syncTables = () => {
-    Book.sync();
+
+    Genre.hasMany(Book);
+    Book.belongsTo(Genre); 
+
+
     Genre.sync();
+    Book.sync();
+
+        // creates and then connects the 1 to 1 relationship
+
 };
 
 
@@ -29,6 +40,10 @@ const syncTables = () => {
 // req = request, res = response
 
 // "res.status(200)" = send this message to client, Thunder Client will receive this message
+
+app.use("/books", bookRouter);
+app.use("/genres", genreRouter);
+
 
 app.get("/health", (req, res) => {
     res.status(200).json({ message: "API is healthy"});
