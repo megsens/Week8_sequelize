@@ -7,43 +7,18 @@ require("dotenv").config();
 
 const express = require("express");
 
+const bookRouter = require("./books/routes")
+
 const port = process.env.PORT || 5001;
 
 const app = express();
 
 app.use(express.json());
 
-const { DataTypes } = require("sequelize");
-const connection = require(".db/connection");
-
-const Book = connection.define("Book", {
-    title: {
-        type: DataTypes.STRING,
-    },
-    author: {
-        type: DataTypes.STRING
-    },
-    genre: {
-        type: DataTypes.STRING
-    }
-});
-
 const syncTables = () => {
     Book.sync();
 };
 
-app.post("/addbook", async (req, res) => {
-    console.log(req.body);
-    const book = await Book.create({
-        title: req.body.title,
-        author: req.body.author,
-        genre: req.body.genre,
-    });
-
-    const successResponse = {
-        book: book,
-        message: "book created",
-    };
 
 // "app" = loaded express into APP, to access the ".GET" method (or "GET Request"), the ".GET1" method corresponds to a HTTP Verb
 
