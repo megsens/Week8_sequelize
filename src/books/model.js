@@ -5,12 +5,13 @@ const Book = connection.define("Book", {
     title: {
         type: DataTypes.STRING,
     },
-    author: {
-        type: DataTypes.STRING
+    AuthorID: {
+        type: DataTypes.INTEGER
     },
-    genre: {
-        type: DataTypes.STRING
+    GenreID:{
+        type: DataTypes.INTEGER
     }
+        
 });
 
 module.exports = Book;
